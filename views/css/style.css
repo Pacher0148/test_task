@@ -1,0 +1,20 @@
+body {
+    background: url('http://p1.pichost.me/i/58/1817571.jpg') no-repeat center;
+}
+.loginForm {
+    position: absolute;
+    top: 30%;
+    left: 25%;
+}
+.loginForm h2 {
+   margin-bottom: 30px;
+}
+.userData {
+    position: absolute;
+    right: 20px;
+    width: auto;
+}
+.errorData {
+    color: darkred;
+    display: inline-block;
+}
