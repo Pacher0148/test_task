@@ -1,5 +1,5 @@
 body {
-    background: url('http://p1.pichost.me/i/58/1817571.jpg') no-repeat center;
+    background: url('http://smhos.org/wp-content/uploads/2014/10/Silver-Blur-Background-Wallpaper.jpg') center;
 }
 .loginForm {
     position: absolute;
@@ -17,4 +17,35 @@ body {
 .errorData {
     color: darkred;
     display: inline-block;
+}
+.productPage {
+    margin-bottom: 50px;
+}
+.productCard {
+    height: 150px;
+}
+.rait {
+    margin-left: 5px;
+}
+.rait input, .rait i {
+    display: inline-block;
+}
+.comment {
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+.hint, .response {
+    position: absolute;
+    z-index: 5;
+    background: darkslateblue;
+    color: #fff;
+    border-radius: 5px;
+    padding: 0 5px;
+    font-size: 12px;
+}
+.response.fail {
+    background: darkred !important;
+}
+.removeRait {
+    cursor: pointer;
 }

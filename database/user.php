@@ -13,7 +13,7 @@ class User
         $row = mysql_fetch_assoc($result);
 
         if (hash('tiger160,4', $userpass) == $row['pass']) {
-            return true;
+            return $row['id'];
         } else {
             return false;
         }
@@ -25,6 +25,6 @@ class User
     id INT UNSIGNED AUTO_INCREMENT NOT NULL,
     name VARCHAR(200) NOT NULL,
     pass VARCHAR(200) NOT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id, name)
     )
  */
