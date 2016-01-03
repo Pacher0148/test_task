@@ -14,7 +14,7 @@
                 <?php foreach($itemMass as $item): ?>
                     <div class="col-xs-12">
                         <span class="userName"><?php echo $item['userName']; ?></span>
-                    <?php for($i = 0; $i < $item['rait']+1; $i++): ?>
+                    <?php for($i = 0; $i < $item['rait']; $i++): ?>
                         <i class="glyphicon glyphicon-star"></i>
                     <?php endfor; ?>
                         <p class="userComment"><?php echo $item['comment']; ?></p>

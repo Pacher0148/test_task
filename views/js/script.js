@@ -61,8 +61,8 @@ $(document).ready(function() {
         })
         .on('keypress', '#writeComment', function(e){
             $(this).parent().children('#saveComment').text('Save');
-            $(this).removeClass('btn-success');
-            $(this).addClass('btn-primary');
+            $(this).parent().children('#saveComment').removeClass('btn-success');
+            $(this).parent().children('#saveComment').addClass('btn-primary');
         })
     ;
 });
