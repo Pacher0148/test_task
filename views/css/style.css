@@ -49,3 +49,31 @@ body {
 .removeRait {
     cursor: pointer;
 }
+#saveComment {
+    margin-right: 3px;
+}
+.productHeader a {
+    color: #000;
+    text-decoration: none;
+}
+.productHeader a:hover {
+    color: darkslateblue;
+    text-decoration: underline;
+}
+.bigImage {
+    width: 250px;
+    height: 250px;
+    border: 2px dashed darkslateblue;
+    margin-bottom: 20px;
+}
+.commentList i {
+    display: inline-block;
+    color: yellow;
+}
+.commentList span {
+    display: inline-block;
+}
+.userComment {
+    margin-left: 15px;
+    font-size: 13px;
+}

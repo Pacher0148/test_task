@@ -27,6 +27,18 @@ class RaitAndComment
             or die(mysql_error());
         }
     }
+
+    public function saveComment($userId, $productId, $comment) {
+        if ($this->checkUser($userId, $productId)) {
+            $request = mysql_query("UPDATE `rait_and_comment` SET comment = '".$comment."'
+                                        WHERE userId = ".$userId." AND productId = ".$productId)
+            or die(mysql_error());
+        } else {
+            $request = mysql_query("INSERT INTO `rait_and_comment` (userId, productId, comment)
+                                      VALUES (".$userId.", ".$productId.", '".$comment."')")
+            or die(mysql_error());
+        }
+    }
 }
 
 /*

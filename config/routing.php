@@ -1,4 +1,5 @@
 <?php
+    session_start();
     require('config.php');
     if (isset($_GET['file'], $_GET['action'])) {
         if ($_GET['file'] == 'loginController') {
