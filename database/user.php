@@ -2,18 +2,28 @@
 
 class User
 {
+    private $db;
+
     function __construct($path) {
         require($path.'config/config.php');
-        mysql_connect('localhost', $user, $pass);
-        mysql_select_db($dbname);
+        $this->db = new PDO('mysql:dbname='.$dbname.';host=localhost;charset=UTF8', $user, $pass);
+        $this->db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
     public function checkData($username, $userpass) {
-        $result = mysql_query("SELECT * FROM `user` WHERE name = '".$username."'");
-        $row = mysql_fetch_assoc($result);
+        $request = $this->db->prepare("SELECT * FROM `user` WHERE name = :name");
+        $request->bindValue(':name', $username, PDO::PARAM_STR);
+        $request->execute();
+        $results = $request->fetchAll(PDO::FETCH_ASSOC);
 
-        if (hash('tiger160,4', $userpass) == $row['pass']) {
-            return $row['id'];
+        $checkPass = 'totaly_not_valid_password';
+        if (isset($results[0])) {
+            $checkPass = $results[0]['pass'];
+        }
+
+        if (hash('tiger160,4', $userpass) == $checkPass) {
+            return $results[0]['id'];
         } else {
             return false;
         }

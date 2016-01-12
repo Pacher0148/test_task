@@ -23,7 +23,7 @@ class productController
         if (isset($_GET['productId']) && $_GET['productId'] > 0) {
             require($this->path.'database/product.php');
             $product = new Product($this->path);
-            $itemMass = $product->getOne($_SESSION['userId'], $_GET['productId']);
+            $itemMass = $product->getOne($_GET['productId']);
 
             require($this->path . 'views/bigPage.php');
         } else {

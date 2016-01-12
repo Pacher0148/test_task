@@ -2,35 +2,37 @@
 
 class Product
 {
+    private $db;
+
     function __construct($path) {
         require($path.'config/config.php');
-        mysql_connect('localhost', $user, $pass);
-        mysql_select_db($dbname);
+        $this->db = new PDO('mysql:dbname='.$dbname.';host=localhost;charset=UTF8', $user, $pass);
+        $this->db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
     public function getList($userId) {
-        $result = mysql_query("SELECT p.id, p.name, p.image, rc.comment, rc.rait FROM `product` p
-                                LEFT JOIN `rait_and_comment` rc ON (rc.productId = p.id AND rc.userId = ".$userId.")
-                                ORDER BY p.id");
-        $itemMass = array();
-        while($row = mysql_fetch_assoc($result)) {
-            $itemMass[] = $row;
-        }
+        $request = $this->db->prepare("SELECT p.id, p.name, p.image, rc.comment, rc.rate FROM `product` p
+                                        LEFT JOIN `rate_and_comment` rc ON (rc.productId = p.id AND rc.userId = :userId)
+                                        ORDER BY p.id");
+        $request->bindValue(':userId', $userId, PDO::PARAM_INT);
+        $request->execute();
+        $results = $request->fetchAll(PDO::FETCH_ASSOC);
 
-        return $itemMass;
+        return $results;
     }
 
-    public function getOne($userId, $productId) {
-        $result = mysql_query("SELECT p.id, p.name, p.image, rc.comment, rc.rait, u.name as userName FROM `product` p
-                                LEFT JOIN `rait_and_comment` rc ON (rc.productId = ".$productId.")
-                                LEFT JOIN `user` u ON (rc.userId = u.id)
-                                GROUP BY rc.userId");
-        $itemMass = array();
-        while($row = mysql_fetch_assoc($result)) {
-            $itemMass[] = $row;
-        }
+    public function getOne($productId) {
+        $request = $this->db->prepare("SELECT p.id, p.name, p.image, rc.comment, rc.rate, u.name as userName FROM `product` p
+                                        LEFT JOIN `rate_and_comment` rc ON (rc.productId = p.id)
+                                        LEFT JOIN `user` u ON (rc.userId = u.id)
+                                        WHERE p.id = :productId
+                                        GROUP BY rc.userId");
+        $request->bindValue(':productId', $productId, PDO::PARAM_INT);
+        $request->execute();
+        $results = $request->fetchAll(PDO::FETCH_ASSOC);
 
-        return $itemMass;
+        return $results;
     }
 }
 

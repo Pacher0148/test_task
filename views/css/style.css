@@ -24,10 +24,10 @@ body {
 .productCard {
     height: 150px;
 }
-.rait {
+.rate {
     margin-left: 5px;
 }
-.rait input, .rait i {
+.rate input, .rate i {
     display: inline-block;
 }
 .comment {
@@ -46,7 +46,7 @@ body {
 .response.fail {
     background: darkred !important;
 }
-.removeRait {
+.removeRate {
     cursor: pointer;
 }
 #saveComment {

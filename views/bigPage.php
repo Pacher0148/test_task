@@ -14,7 +14,7 @@
                 <?php foreach($itemMass as $item): ?>
                     <div class="col-xs-12">
                         <span class="userName"><?php echo $item['userName']; ?></span>
-                    <?php for($i = 0; $i < $item['rait']; $i++): ?>
+                    <?php for($i = 0; $i < $item['rate']; $i++): ?>
                         <i class="glyphicon glyphicon-star"></i>
                     <?php endfor; ?>
                         <p class="userComment"><?php echo $item['comment']; ?></p>
@@ -22,7 +22,7 @@
                 <?php endforeach; ?>
             <?php else: ?>
                 <div class="col-xs-12">
-                    <h3>No comments & rait</h3>
+                    <h3>No comments & rates</h3>
                 </div>
             <?php endif; ?>
             </div>

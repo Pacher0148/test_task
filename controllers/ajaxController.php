@@ -8,12 +8,12 @@ class ajaxController
         $this->path = $path;
     }
 
-    public function raitProduct() {
+    public function rateProduct() {
         $response = 'fail';
-        if (isset($_POST['userId'], $_POST['productId'], $_POST['rait'])) {
-            require($this->path.'database/raitAndComment.php');
-            $productData = new RaitAndComment($this->path);
-            $productData->saveRait($_POST['userId'], $_POST['productId'], $_POST['rait']);
+        if (isset($_POST['userId'], $_POST['productId'], $_POST['rate'])) {
+            require($this->path.'database/rateAndComment.php');
+            $productData = new RateAndComment($this->path);
+            $productData->saveRate($_POST['userId'], $_POST['productId'], $_POST['rate']);
             $response = 'success';
         }
         echo json_encode($response);
@@ -22,8 +22,8 @@ class ajaxController
     public function commentProduct() {
         $response = 'fail';
         if (isset($_POST['userId'], $_POST['productId'], $_POST['comment'])) {
-            require($this->path.'database/raitAndComment.php');
-            $productData = new RaitAndComment($this->path);
+            require($this->path.'database/rateAndComment.php');
+            $productData = new RateAndComment($this->path);
             $productData->saveComment($_POST['userId'], $_POST['productId'], $_POST['comment']);
             $response = 'success';
         }
