@@ -9,7 +9,7 @@
             $controller = new $_GET['file']($path);
             $controller->$_GET['action']();
         } else {
-            if (!isset($_SESSION) || empty($_SESSION['userId'])) {
+            if (!isset($_SESSION['userId'])) {
                 header('Location: /error.html', true, 301);
             } else {
                 require($path.'controllers/'.$_GET['file'].'.php');
