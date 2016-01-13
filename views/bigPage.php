@@ -21,7 +21,7 @@
                     <?php for($i = 0; $i < $item['rate']; $i++): ?>
                         <i class="glyphicon glyphicon-star"></i>
                     <?php endfor; ?>
-                        <p class="userComment"><?php echo $item['comment']; ?></p>
+                        <p class="userComment"><?php echo htmlentities($item['comment']); ?></p>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
