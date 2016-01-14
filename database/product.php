@@ -12,27 +12,31 @@ class Product
     }
 
     public function getList($userId) {
-        $request = $this->db->prepare("SELECT p.id, p.name, p.image, rc.comment, rc.rate FROM `product` p
-                                        LEFT JOIN `rate_and_comment` rc ON (rc.productId = p.id AND rc.userId = :userId)
-                                        ORDER BY p.id");
-        $request->bindValue(':userId', $userId, PDO::PARAM_INT);
-        $request->execute();
-        $results = $request->fetchAll(PDO::FETCH_ASSOC);
-
-        return $results;
+        try {
+            $request = $this->db->prepare("SELECT p.id, p.name, p.image, rc.comment, rc.rate FROM `product` p
+                                            LEFT JOIN `rate_and_comment` rc ON (rc.productId = p.id AND rc.userId = :userId)
+                                            ORDER BY p.id");
+            $request->bindValue(':userId', $userId, PDO::PARAM_INT);
+            $request->execute();
+        } catch(PDOException $exception){
+            return $exception->getMessage();
+        }
+        return $request->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getOne($productId) {
-        $request = $this->db->prepare("SELECT p.id, p.name, p.image, rc.comment, rc.rate, u.name as userName FROM `product` p
-                                        LEFT JOIN `rate_and_comment` rc ON (rc.productId = p.id)
-                                        LEFT JOIN `user` u ON (rc.userId = u.id)
-                                        WHERE p.id = :productId
-                                        GROUP BY rc.userId");
-        $request->bindValue(':productId', $productId, PDO::PARAM_INT);
-        $request->execute();
-        $results = $request->fetchAll(PDO::FETCH_ASSOC);
-
-        return $results;
+        try {
+            $request = $this->db->prepare("SELECT p.id, p.name, p.image, rc.comment, rc.rate, u.name as userName FROM `product` p
+                                            LEFT JOIN `rate_and_comment` rc ON (rc.productId = p.id)
+                                            LEFT JOIN `user` u ON (rc.userId = u.id)
+                                            WHERE p.id = :productId
+                                            GROUP BY rc.userId");
+            $request->bindValue(':productId', $productId, PDO::PARAM_INT);
+            $request->execute();
+        } catch(PDOException $exception){
+            return $exception->getMessage();
+        }
+        return $request->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 

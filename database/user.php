@@ -12,9 +12,13 @@ class User
     }
 
     public function checkData($username, $userpass) {
-        $request = $this->db->prepare("SELECT * FROM `user` WHERE name = :name");
-        $request->bindValue(':name', $username, PDO::PARAM_STR);
-        $request->execute();
+        try {
+            $request = $this->db->prepare("SELECT * FROM `user` WHERE name = :name");
+            $request->bindValue(':name', $username, PDO::PARAM_STR);
+            $request->execute();
+        } catch(PDOException $exception){
+            return $exception->getMessage();
+        }
         $results = $request->fetchAll(PDO::FETCH_ASSOC);
 
         $checkPass = 'totaly_not_valid_password';

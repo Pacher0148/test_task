@@ -12,37 +12,51 @@ class RateAndComment
     }
 
     public function checkUser($userId, $productId) {
-        $request = $this->db->prepare("SELECT id FROM `rate_and_comment` WHERE userId = :userId AND productId = :productId");
-        $request->bindValue(':userId', $userId, PDO::PARAM_INT);
-        $request->bindValue(':productId', $productId, PDO::PARAM_INT);
-        $request->execute();
-        $results = $request->fetchAll(PDO::FETCH_ASSOC);
-
-        return count($results) > 0 ? true : false;
+        try {
+            $request = $this->db->prepare("SELECT id FROM `rate_and_comment` WHERE userId = :userId AND productId = :productId");
+            $request->bindValue(':userId', $userId, PDO::PARAM_INT);
+            $request->bindValue(':productId', $productId, PDO::PARAM_INT);
+            $request->execute();
+        } catch(PDOException $exception){
+            return $exception->getMessage();
+        }
+        return count($request->fetchAll(PDO::FETCH_ASSOC)) > 0 ? true : false;
     }
 
     public function saveRate($userId, $productId, $rate) {
         if ($this->checkUser($userId, $productId)) {
-            $request = $this->db->prepare("UPDATE `rate_and_comment` SET rate = :rate WHERE userId = :userId AND productId = :productId");
+            $sql = "UPDATE `rate_and_comment` SET rate = :rate WHERE userId = :userId AND productId = :productId";
         } else {
-            $request = $this->db->prepare("INSERT INTO `rate_and_comment` (userId, productId, rate) VALUES (:userId, :productId, :rate)");
+            $sql = "INSERT INTO `rate_and_comment` (userId, productId, rate) VALUES (:userId, :productId, :rate)";
         }
-        $request->bindValue(':rate', $rate, PDO::PARAM_INT);
-        $request->bindValue(':userId', $userId, PDO::PARAM_INT);
-        $request->bindValue(':productId', $productId, PDO::PARAM_INT);
-        $request->execute();
+        try {
+            $request = $this->db->prepare($sql);
+            $request->bindValue(':rate', $rate, PDO::PARAM_INT);
+            $request->bindValue(':userId', $userId, PDO::PARAM_INT);
+            $request->bindValue(':productId', $productId, PDO::PARAM_INT);
+            $request->execute();
+        } catch(PDOException $exception){
+            return $exception->getMessage();
+        }
+        return true;
     }
 
     public function saveComment($userId, $productId, $comment) {
         if ($this->checkUser($userId, $productId)) {
-            $request = $this->db->prepare("UPDATE `rate_and_comment` SET comment = :comment WHERE userId = :userId AND productId = :productId");
+            $sql = "UPDATE `rate_and_comment` SET comment = :comment WHERE userId = :userId AND productId = :productId";
         } else {
-            $request = $this->db->prepare("INSERT INTO `rate_and_comment` (userId, productId, comment) VALUES (:userId, :productId, :comment)");
+            $sql = "INSERT INTO `rate_and_comment` (userId, productId, comment) VALUES (:userId, :productId, :comment)";
         }
-        $request->bindValue(':comment', $comment, PDO::PARAM_STR);
-        $request->bindValue(':userId', $userId, PDO::PARAM_INT);
-        $request->bindValue(':productId', $productId, PDO::PARAM_INT);
-        $request->execute();
+        try {
+            $request = $this->db->prepare($sql);
+            $request->bindValue(':comment', $comment, PDO::PARAM_STR);
+            $request->bindValue(':userId', $userId, PDO::PARAM_INT);
+            $request->bindValue(':productId', $productId, PDO::PARAM_INT);
+            $request->execute();
+        } catch(PDOException $exception){
+            return $exception->getMessage();
+        }
+        return true;
     }
 }
 

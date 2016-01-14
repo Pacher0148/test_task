@@ -13,8 +13,9 @@ class ajaxController
         if (isset($_POST['userId'], $_POST['productId'], $_POST['rate'])) {
             require($this->path.'database/rateAndComment.php');
             $productData = new RateAndComment($this->path);
-            $productData->saveRate($_POST['userId'], $_POST['productId'], $_POST['rate']);
-            $response = 'success';
+            if ($productData->saveRate($_POST['userId'], $_POST['productId'], $_POST['rate'])) {
+                $response = 'success';
+            }
         }
         echo json_encode($response);
     }
@@ -24,8 +25,9 @@ class ajaxController
         if (isset($_POST['userId'], $_POST['productId'], $_POST['comment'])) {
             require($this->path.'database/rateAndComment.php');
             $productData = new RateAndComment($this->path);
-            $productData->saveComment($_POST['userId'], $_POST['productId'], htmlentities($_POST['comment']));
-            $response = 'success';
+            if ($productData->saveComment($_POST['userId'], $_POST['productId'], htmlentities($_POST['comment']))) {
+                $response = 'success';
+            }
         }
         echo json_encode($response);
     }

@@ -18,7 +18,7 @@ class loginController
         if (isset($_POST['username'], $_POST['userpass'])) {
             $user = new User($this->path);
             $userId = $user->checkData($_POST['username'], $_POST['userpass']);
-            if ($userId) {
+            if ($userId && is_int($userId)) {
                 session_start();
                 $_SESSION['userId'] = $userId;
                 header('Location: /config/routing.php?file=productController&action=productList', true, 301);
