@@ -18,9 +18,9 @@ class loginController
         if (isset($_POST['username'], $_POST['userpass'])) {
             $user = new User($this->path);
             $userId = $user->checkData($_POST['username'], $_POST['userpass']);
-            if ($userId && is_int($userId)) {
+            if ($userId && $userId > 0) {
                 session_start();
-                $_SESSION['userId'] = $userId;
+                $_SESSION['userId'] = intval($userId);
                 header('Location: /config/routing.php?file=productController&action=productList', true, 301);
             } else {
                 $this->loginPage('Incorrect data');
