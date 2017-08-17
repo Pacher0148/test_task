@@ -1,3 +1,5 @@
+Project from a test-task.
+
 Тестовое задание:
 
 Концепция
